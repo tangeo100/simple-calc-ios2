@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     var count : [String] = []
     var avg : [String] = []
     var number: String = ""
+    var operation : String = ""
     
     @IBOutlet weak var labelText: UILabel!
     
@@ -29,6 +30,7 @@ class ViewController: UIViewController {
     
     @IBAction func functionButton(_ sender: UIButton) {
         args.append(labelText.text!)
+        operation = operation + labelText.text! + " " + sender.titleLabel!.text! + " "
         number = ""
         args.append(sender.titleLabel!.text!)
     }
@@ -45,23 +47,26 @@ class ViewController: UIViewController {
     }
     
     @IBAction func enterButton(_ sender: UIButton) {
+        operation = operation + labelText.text! + " = "
         if(args.count > 0){
             args.append(labelText.text!)
             let ans = calculate()
             if floor(ans) == ans {
                 labelText.text = String(Int(ans))
-                number = ""
-                args = []
-                count = []
-                avg = []
-                return
+                operation = operation + labelText.text!
+            } else {
+                labelText.text = String(ans)
+                operation = operation + labelText.text!
             }
-            
-            labelText.text = String(ans)
+            self.view.addSubview(<#T##view: UIView##UIView#>)//add label for operation
+            operation = ""
             number = ""
             args = []
             count = []
             avg = []
+        }
+        for i in hist{
+            print(i)
         }
     }
     
@@ -75,24 +80,28 @@ class ViewController: UIViewController {
             }
             labelText.text = String(total)
             number = ""
+             //add label for operation
             return
         }
         labelText.text = "Can only factorial integers"
     }
     
     @IBAction func average(_ sender: UIButton) {
+        operation = operation + labelText.text! + " avg "
         avg.append(labelText.text!)
         args.append("avg")
         number = ""
     }
     
     @IBAction func count(_ sender: UIButton) {
+        operation = operation + labelText.text! + " count "
         count.append(labelText.text!)
         args.append("count")
         number = ""
     }
     
     @IBAction func clear(_ sender: UIButton) {
+        operation = ""
         args = []
         count = []
         avg = []
@@ -133,6 +142,5 @@ class ViewController: UIViewController {
             }
         }
     }
-    
 }
 
