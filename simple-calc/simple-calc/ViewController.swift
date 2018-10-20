@@ -8,20 +8,27 @@
 
 import UIKit
 
-class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
+class ViewController: UIViewController{
+
     var args : [String] = []
     var count : [String] = []
     var avg : [String] = []
     var number: String = ""
     var operation : String = ""
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! SecondViewController
+        vc.history = operation
+    }
+    
     @IBOutlet weak var labelText: UILabel!
+    
     
     @IBAction func numButton(_ sender: UIButton ) {
         number = number + sender.titleLabel!.text!
@@ -58,15 +65,11 @@ class ViewController: UIViewController {
                 labelText.text = String(ans)
                 operation = operation + labelText.text!
             }
-            self.view.addSubview(<#T##view: UIView##UIView#>)//add label for operation
-            operation = ""
+            operation = operation + "\n"
             number = ""
             args = []
             count = []
             avg = []
-        }
-        for i in hist{
-            print(i)
         }
     }
     
@@ -78,9 +81,9 @@ class ViewController: UIViewController {
                 total = total * num
                 num = num - 1
             }
-            labelText.text = String(total)
             number = ""
-             //add label for operation
+            operation = operation + labelText.text! + " fact = " + String(total) + " \n"
+            labelText.text = String(total)
             return
         }
         labelText.text = "Can only factorial integers"
@@ -101,7 +104,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func clear(_ sender: UIButton) {
-        operation = ""
         args = []
         count = []
         avg = []
